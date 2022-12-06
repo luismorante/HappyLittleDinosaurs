@@ -3,6 +3,7 @@ from PIL import ImageTk, Image
 import random
 import sqlite3
 from sqlite3 import Error
+from os.path import exists as file_exists
 
 dbFile = r"tpch.sqlite"
 
@@ -156,20 +157,40 @@ def main_window():
             print(cardNames[count])
             count += 1
 
-        card_image1 = resize_cards(f'images/cards/{cardNames[0]}.jpg')
-        playercard1.config(image = card_image1)
+        if file_exists(f'images/cards/{cardNames[0]}.jpg'):
+            card_image1 = resize_cards(f'images/cards/{cardNames[0]}.jpg')
+            playercard1.config(image = card_image1)
+        else:
+            card_image1 = resize_cards(f'images/cards/Main_Card.jpg')
+            playercard1.config(image = card_image1)
 
-        card_image2 = resize_cards(f'images/cards/{cardNames[1]}.jpg')
-        playercard2.config(image = card_image2)
+        if file_exists(f'images/cards/{cardNames[1]}.jpg'):
+            card_image2 = resize_cards(f'images/cards/{cardNames[1]}.jpg')
+            playercard2.config(image = card_image2)
+        else:
+            card_image1 = resize_cards(f'images/cards/Main_Card.jpg')
+            playercard1.config(image = card_image1)
 
-        card_image3 = resize_cards(f'images/cards/{cardNames[2]}.jpg')
-        playercard3.config(image = card_image3)
+        if file_exists(f'images/cards/{cardNames[2]}.jpg'):
+            card_image3 = resize_cards(f'images/cards/{cardNames[2]}.jpg')
+            playercard3.config(image = card_image3)
+        else:
+            card_image1 = resize_cards(f'images/cards/Main_Card.jpg')
+            playercard1.config(image = card_image1)
 
-        card_image4 = resize_cards(f'images/cards/{cardNames[3]}.jpg')
-        playercard4.config(image = card_image4)
+        if file_exists(f'images/cards/{cardNames[3]}.jpg'):
+            card_image4 = resize_cards(f'images/cards/{cardNames[3]}.jpg')
+            playercard4.config(image = card_image4)
+        else:
+            card_image1 = resize_cards(f'images/cards/Main_Card.jpg')
+            playercard1.config(image = card_image1)
 
-        card_image5 = resize_cards(f'images/cards/{cardNames[4]}.jpg')
-        playercard5.config(image = card_image5)        
+        if file_exists(f'images/cards/{cardNames[4]}.jpg'):
+            card_image5 = resize_cards(f'images/cards/{cardNames[4]}.jpg')
+            playercard5.config(image = card_image5)    
+        else:
+            card_image1 = resize_cards(f'images/cards/Main_Card.jpg')
+            playercard1.config(image = card_image1)    
 
     
     def detect_key_press(event):
