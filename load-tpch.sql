@@ -38,5 +38,6 @@
 -- .separator "|"
 -- .import data/disasterCards.tbl disasterCards
 
-update disasterCards*
-set d_effect = null
+update mainCards
+set m_name = "FRENEMY'S CURSE"
+where m_mainkey = 42
