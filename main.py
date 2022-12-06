@@ -1,6 +1,43 @@
 from tkinter import *
 from PIL import ImageTk, Image
 import random
+import sqlite3
+from sqlite3 import Error
+
+dbFile = r"tpch.sqlite"
+
+print("Open database: ", dbFile)
+
+conn = None
+try:
+    conn = sqlite3.connect(dbFile)
+    print("success")
+except Error as e:
+    print(e)
+
+sql = """DELETE FROM hand"""
+conn.execute(sql)
+conn.commit()
+sql = """DELETE FROM disasterArea"""
+conn.execute(sql)
+conn.commit()
+sql = """DELETE FROM escapeRoute"""
+conn.execute(sql)
+conn.commit()
+sql = """DELETE FROM scoring"""
+conn.execute(sql)
+conn.commit()
+sql = """DELETE FROM field"""
+conn.execute(sql)
+conn.commit()
+sql = """DELETE FROM upcoming"""
+conn.execute(sql)
+conn.commit()
+sql = """DELETE FROM lastDisaster"""
+conn.execute(sql)
+conn.commit()
+
+
 
 ###########      Resize Cards    #################
 def resize_cards(card):
@@ -159,13 +196,21 @@ def main_window():
         global playerhand
 
         ########## Build Deck from Database ######### 
-        deck = ["COOL_STICK","HANDY_PAN","GRAVE_MAKER","BONEHEAD","RUNHOMEBAT","BOW_AND_DINO","STING_STABBER","ICED_PTEA","METEOR_CANNON"]
-        for i in range (9):
-            deck.append(deck[i])
-        for i in range (18):
-            deck.append(deck[i])
-        
-        global playerhand
+        cards = """SELECT *
+                    FROM mainCards"""
+        cardList = conn.cursor()
+        cardList.execute(cards)
+        qtyCardList = cardList.fetchall()
+        deck = []
+        for card in qtyCardList:
+            for i in range(card[5]):
+                deck.append(card)
+        # print(qtyCardList)
+        # deck = ["COOL_STICK","HANDY_PAN","GRAVE_MAKER","BONEHEAD","RUNHOMEBAT","BOW_AND_DINO","STING_STABBER","ICED_PTEA","METEOR_CANNON"]
+        # for i in range (9):
+        #     deck.append(deck[i])
+        # for i in range (18):
+        #     deck.append(deck[i])
         playerhand = []
         # ___________________________________________
 
@@ -175,9 +220,38 @@ def main_window():
         for i in range (5):
             card = deck[0]
             playerhand.append(card)
-            deck.pop(0)     
+            deck.pop(0)
 
-        show_hand()      
+        global card_image1
+        global card_image2
+        global card_image3
+        global card_image4
+        global card_image5
+
+        cardNames = []
+        count = 0
+
+        for card in playerhand:
+            cardNames.append(playerhand[count][2].replace(' ', '_'))
+            print(cardNames[count])
+            count += 1
+
+        card_image1 = resize_cards(f'images/cards/{cardNames[0]}.jpg')
+        playercard1.config(image = card_image1)
+
+        card_image2 = resize_cards(f'images/cards/{cardNames[1]}.jpg')
+        playercard2.config(image = card_image2)
+
+        card_image3 = resize_cards(f'images/cards/{cardNames[2]}.jpg')
+        playercard3.config(image = card_image3)
+
+        card_image4 = resize_cards(f'images/cards/{cardNames[3]}.jpg')
+        playercard4.config(image = card_image4)
+
+        card_image5 = resize_cards(f'images/cards/{cardNames[4]}.jpg')
+        playercard5.config(image = card_image5)        
+
+        show_hand()
 
         show_opponenthand()
 
@@ -269,3 +343,9 @@ title_root.config(bg = 'LightBlue')
 
 
 mainloop() 
+
+try:
+    conn.close()
+    print("success")
+except Error as e:
+    print(e)
