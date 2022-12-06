@@ -1,0 +1,43 @@
+1|Point|COOL STICK|1|null|8
+2|Point|HANDY PAN|2|null|8
+3|Point|GRAVE MAKER|3|null|8
+4|Point|BONEHEAD|4|null|8
+5|Point|RUNHOMEBAT|5|null|8
+6|Point|BOW AND DINO|6|null|8
+7|Point|STING STABBER|7|null|7
+8|Point|ICED PTEA|8|null|7
+9|Point|METEOR CANNON|9|null|6
+10|Point|PET ROCK|0|You may discard a Point card from your hand, then add its point value to your score this round.|4
+11|Point|DINO GRABBER|1|You may look at another player's hand. Choose a card and add it to your hand.|2
+12|Point|GRAPPLING SNAKE|2|You may swap this card with the Point card of the player to your right or left. You cannot swap for a card that has an effect.|2
+13|Point|"DELICIOUS" SMOOTHIE|3|"DELICIOUS" SMOOTHIE|2
+14|Point|FIRE SPRAY|4|You may discard up to 3 cards from your hand.|2
+15|Point|MOUTH TRAP|5|During scoring this round, switch the score of the highest-scoring player with the score of the lowest scoring player after scores have been calculated. |2
+16|Point|SPECIAL STAR FRUIT|6|During scoring this round, double the effects of Score Booster and Score Sapper cards.|2
+17|Point|TREENOCULARS|7|You may look at the top 2 cards in the deck. Choose a card and add it to your hand. Discard the other card.|2
+18|Point|HUNGRY PLANT|8|You may swap the Point cards of any two other players.|1
+19|Point|FLAMING CHAINSAW|9|During this round, all other Point card effects are ignored.|1
+20|Point|GOOD LUCK ROD|1|You may look at the top 3 cards in the deck. If at least one of them is a Point card, choose one of them and add its point value to your score this round, then discard all 3 cards.|2
+21|Point|ISOPOD SWAP|3|You may swap this card with the point card of another player. You cannot swap for a card that has an effect.|2
+22|Point|VOODOO DINO|5|You may discard any number of Point cards from your hand. For each card discarded, you may subtract 1 point from any player's score this round.|2
+23|Point|SWISS SHEARS|7|During scoring this round, the effects of score booster and score sapper cards played by any other player are halved|1
+24|Point|BRONTO-IN-THE-BOX|7|If you have the highest score this round at the end of scoring, choose any player. That player must add the face up Disaster card to their Disaster area instead of the lowest-scoring player.|1
+25|Point|BEHEMOTH BLADE|9|During scoring this round, no player may play instant cards.|1
+26|Point|TRASH INTO TREASURE|0|You may discard up to 3 cards for each card you discard, add 3 points to your score this round.|2
+27|Point|UNWANTED LUNCH|2|You may swap hands with another player.|2
+28|Point|HANDY BACKPACK|4|During scoring this round, add 2 points to your score for each Disaster card in your Disaster area|2
+29|Point|ICE CREAM|6|If you have the higest score this round at the end of scoring, move a Disaster card from your Disaster Area to the bottom of the Disaster deck.|1
+30|Point|REALLY THICK GLASSES|8|Look at the top card of the Disaster deck. You may either place it back on top of the Disaster deck or move it to the bottom of the Disaster deck.|1
+31|Point|EXTRA SHARP STICK|9|If you have the highest score this round at the end of scoring, collect 2 additional points.|1
+32|Instant|SCORE BOOSTER|null|Play this card during scoring. Add 2 points to any player's score this round.|8
+33|Instant|SCORE SAPPER|null|Play this card during scoring. Subtract 2 points to any player's score this round.|8
+34|Instant|DISASTER INSURANCE|null|Play this card if you would add a Disaster card to your Disaster Area this round. Move that Disaster card to the bottom of the Disaster deck instead.|4
+35|Instant|SCORE INVERSION|null|Play this card during scoring. Switch the score of the highest-scoring player with the score of the lowest-scoring player after scores have been calculated.|3
+36|Instant|DISASTER REDIRECT|null|Play this card if you would add a Disaster card to your Disaster Area this round. Add that Disaster card to another player's Disaster Area instead.|2
+37|Instant|HELPING HAND|null|Play this card during the scoring. Discard any number of Point cards with a value of 1,2, or 3 from your hand, then add the point value of the discarded cards to your score this round.|2
+38|Instant|DINO LASSO|null|Play this card during the scoring. If you don't have the highest or lowest score in the round, collect points equal to the score of the highest-scoring player this round.|1
+39|Instant|JOY OF PUBERTY|null|Play this card during scoring. Move your Dinosaur meeple backward on your escape route up to 5 spaces. For each space you move backward, add 1 point to any player's score this round.|2
+40|Instant|SPITEFUL BULLYING|null|Play this card during scoring. Move your Dinosaur meeple backward on your escape route up to 5 spaces. For each space you move backward, subtract 1 point to any player's score this round.|2
+41|Instant|BFF's HELP|null|Play this card during scoring. Add 3 points to any player's score this round.|2
+42|Instant|FRENEMY's CURSE|null|Play this card during scoring. Subtract 3 points to any player's score this round.|2
+43|Instant|LUCK BREAK|null|Play this card if you would add a Disaster card to your Disaster Area this round. Move that Disaster card to the bottom of the Disaster deck instead and collect 3 points.|2

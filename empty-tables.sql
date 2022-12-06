@@ -1,0 +1,81 @@
+CREATE TABLE player(
+
+    p_playerkey decimal (2,0) primary key,
+    p_name char (15) not null,
+    p_advantage char(7) not null,
+    p_disadvantage char(7) not null
+
+);
+
+CREATE TABLE hand(
+
+    h_playerkey decimal (2,0) not null,
+    h_mainkey decimal (3,0) not null,
+    h_finger decimal (2,0)
+);
+
+CREATE TABLE disasterArea(
+
+    a_playerkey decimal (2,0) not null,
+    a_disasterkey decimal(3,0) not null
+);
+
+
+
+CREATE TABLE escapeRoute(
+
+    e_playerkey decimal (2,0) not null,
+    e_escaperoute decimal (2,0) not null
+
+);
+
+CREATE TABLE scoring(
+
+    s_playerkey decimal (2,0) not null,
+    s_score decimal (2,0) not null
+
+);
+
+CREATE TABLE field(
+
+    f_playerkey decimal (2,0) not null,
+    f_mainkey decimal (4,0) not null
+
+);
+
+
+CREATE TABLE upcoming(
+
+    u_mainkey decimal (3,0) not null,
+    u_order decimal (6,0) not null
+
+);
+
+CREATE TABLE lastDisaster(
+
+    l_mainkey decimal (3,0) not null,
+    l_order decimal (2,0) not null
+
+);
+
+CREATE TABLE mainCards(
+
+    m_mainkey decimal (3,0) primary key,
+    m_type char (7) not null,
+    m_name char (30) not null,
+    m_point decimal(2,0),
+    m_effect char(500),
+    m_quantity decimal (2,0)
+
+);
+
+CREATE TABLE disasterCards(
+
+    d_disasterkey decimal (3,0) primary key,
+    d_type char (9) not null,
+    d_name char (30) not null,
+    d_story char(500),
+    d_effect char(500),
+    d_quantity decimal (2,0)
+
+);
