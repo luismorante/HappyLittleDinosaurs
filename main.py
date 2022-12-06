@@ -271,45 +271,68 @@ def main_window():
         cardNames = []
         count = 0
 
-        for card in playerhand:
-            cardNames.append(playerhand[count][2].replace(' ', '_'))
-            print(cardNames[count])
-            count += 1
+        cards = """SELECT h_mainkey
+                    FROM hand
+                    WHERE h_playerkey = 1
+                    ORDER BY h_finger"""
 
-        if file_exists(f'images/cards/{cardNames[0]}.jpg'):
+        playerCards = conn.cursor()
+        playerCards.execute(cards)
+        playerCards = playerCards.fetchall()
+        global names
+        names = []
+
+        for card in playerCards:
+            sql = """SELECT m_name
+                    FROM mainCards
+                    WHERE m_mainkey = ?"""
+            result = conn.cursor()
+            result.execute(sql, card)
+            results = result.fetchall()[0]
+            
+            for name in results:
+                names.append(name)
+                cardNames.append(names[count].replace(' ', '_'))
+                count += 1
+            # print(cardNames[count])
+
+        if len(cardNames) > 0 and file_exists(f'images/cards/{cardNames[0]}.jpg'):
             card_image1 = resize_cards(f'images/cards/{cardNames[0]}.jpg')
             playercard1.config(image = card_image1)
         else:
-            card_image1 = resize_cards(f'images/cards/Main_Card.jpg')
+            card_image1 = resize_cards(f'images/cards/none.jpg')
             playercard1.config(image = card_image1)
 
-        if file_exists(f'images/cards/{cardNames[1]}.jpg'):
+        if len(cardNames) > 1 and file_exists(f'images/cards/{cardNames[1]}.jpg'):
             card_image2 = resize_cards(f'images/cards/{cardNames[1]}.jpg')
             playercard2.config(image = card_image2)
         else:
-            card_image1 = resize_cards(f'images/cards/Main_Card.jpg')
-            playercard1.config(image = card_image1)
+            card_image2 = resize_cards(f'images/cards/none.jpg')
+            playercard2.config(image = card_image2)
 
-        if file_exists(f'images/cards/{cardNames[2]}.jpg'):
+        if len(cardNames) > 2 and file_exists(f'images/cards/{cardNames[2]}.jpg'):
             card_image3 = resize_cards(f'images/cards/{cardNames[2]}.jpg')
             playercard3.config(image = card_image3)
         else:
-            card_image1 = resize_cards(f'images/cards/Main_Card.jpg')
-            playercard1.config(image = card_image1)
+            card_image3 = resize_cards(f'images/cards/none.jpg')
+            playercard3.config(image = card_image3)
 
-        if file_exists(f'images/cards/{cardNames[3]}.jpg'):
+        if len(cardNames) > 3 and file_exists(f'images/cards/{cardNames[3]}.jpg'):
             card_image4 = resize_cards(f'images/cards/{cardNames[3]}.jpg')
             playercard4.config(image = card_image4)
         else:
-            card_image1 = resize_cards(f'images/cards/Main_Card.jpg')
-            playercard1.config(image = card_image1)
+            card_image4 = resize_cards(f'images/cards/none.jpg')
+            playercard4.config(image = card_image4)
 
-        if file_exists(f'images/cards/{cardNames[4]}.jpg'):
+        if  len(cardNames) > 4 and file_exists(f'images/cards/{cardNames[4]}.jpg'):
             card_image5 = resize_cards(f'images/cards/{cardNames[4]}.jpg')
             playercard5.config(image = card_image5)    
         else:
-            card_image1 = resize_cards(f'images/cards/Main_Card.jpg')
-            playercard1.config(image = card_image1)    
+            card_image5 = resize_cards(f'images/cards/none.jpg')
+            playercard5.config(image = card_image5)    
+
+    
+ 
 
     
     def detect_key_press(event):
@@ -317,24 +340,146 @@ def main_window():
         if (len(playerhand) > 0):
 
             if event.char == '1':
-                playerhand[0] = "none"
+                search = """SELECT h_mainkey
+                            FROM hand
+                            WHERE h_finger = 1 AND
+                                h_playerkey = 1"""
+                result = conn.cursor()
+                result.execute(search)
+                card = result.fetchall()
+                print(card)
+                if card:
+                    sql = """INSERT INTO field(f_playerkey, f_mainkey)
+                            VALUES(?, ?)"""
+                    args = [1, card[0][0]]
+                    delete = """DELETE FROM hand
+                                WHERE h_playerkey = 1 AND
+                                h_finger = 1"""
+                    conn.execute(delete)
+                    conn.commit()
+                    conn.execute(sql, args)
+                    conn.commit()
+                    playerhand[0] = "none"
+                    sql = """SELECT *
+                            FROM field"""
+                    st = conn.cursor()
+                    st.execute(sql)
+                    print(st.fetchall())
+
                 show_hand()
 
             if event.char == '2':
-                playerhand[1] = "none"
+                search = """SELECT h_mainkey
+                            FROM hand
+                            WHERE h_finger = 2 AND
+                                h_playerkey = 1"""
+                result = conn.cursor()
+                result.execute(search)
+                card = result.fetchall()
+                print(card)
+                if card:
+                    sql = """INSERT INTO field(f_playerkey, f_mainkey)
+                            VALUES(?, ?)"""
+                    args = [1, card[0][0]]
+                    delete = """DELETE FROM hand
+                                WHERE h_playerkey = 1 AND
+                                h_finger = 2"""
+                    conn.execute(delete)
+                    conn.commit()
+                    conn.execute(sql, args)
+                    conn.commit()
+                    playerhand[1] = "none"
+                    sql = """SELECT *
+                            FROM field"""
+                    st = conn.cursor()
+                    st.execute(sql)
+                    print(st.fetchall())
                 show_hand()
 
             if event.char == '3':
-                playerhand[2] = "none"
+                search = """SELECT h_mainkey
+                            FROM hand
+                            WHERE h_finger = 3 AND
+                                h_playerkey = 1"""
+                result = conn.cursor()
+                result.execute(search)
+                card = result.fetchall()
+                print(card)
+                if card:
+                    sql = """INSERT INTO field(f_playerkey, f_mainkey)
+                            VALUES(?, ?)"""
+                    args = [1, card[0][0]]
+                    delete = """DELETE FROM hand
+                                WHERE h_playerkey = 1 AND
+                                h_finger = 3"""
+                    conn.execute(delete)
+                    conn.commit()
+                    conn.execute(sql, args)
+                    conn.commit()
+                    playerhand[2] = "none"
+                    sql = """SELECT *
+                            FROM field"""
+                    st = conn.cursor()
+                    st.execute(sql)
+                    print(st.fetchall())
                 show_hand()
 
             if event.char == '4':
-                playerhand[3] = "none"
+                search = """SELECT h_mainkey
+                            FROM hand
+                            WHERE h_finger = 4 AND
+                                h_playerkey = 1"""
+                result = conn.cursor()
+                result.execute(search)
+                card = result.fetchall()
+                print(card)
+                if card:
+                    sql = """INSERT INTO field(f_playerkey, f_mainkey)
+                            VALUES(?, ?)"""
+                    args = [1, card[0][0]]
+                    delete = """DELETE FROM hand
+                                WHERE h_playerkey = 1 AND
+                                h_finger = 4"""
+                    conn.execute(delete)
+                    conn.commit()
+                    conn.execute(sql, args)
+                    conn.commit()
+                    playerhand[3] = "none"
+                    sql = """SELECT *
+                            FROM field"""
+                    st = conn.cursor()
+                    st.execute(sql)
+                    print(st.fetchall())
                 show_hand()
 
             if event.char == '5':
-                playerhand[4] = "none"
+                search = """SELECT h_mainkey
+                            FROM hand
+                            WHERE h_finger = 5 AND
+                                h_playerkey = 1"""
+                result = conn.cursor()
+                result.execute(search)
+                card = result.fetchall()
+                print(card)
+                if card:
+                    sql = """INSERT INTO field(f_playerkey, f_mainkey)
+                            VALUES(?, ?)"""
+                    args = [1, card[0][0]]
+                    delete = """DELETE FROM hand
+                                WHERE h_playerkey = 1 AND
+                                h_finger = 5"""
+                    conn.execute(delete)
+                    conn.commit()
+                    conn.execute(sql, args)
+                    conn.commit()
+                    playerhand[4] = "none"
+                    sql = """SELECT *
+                            FROM field"""
+                    st = conn.cursor()
+                    st.execute(sql)
+                    print(st.fetchall())
                 show_hand()
+
 
     root.bind('<Key>', detect_key_press)
 
@@ -343,6 +488,10 @@ def main_window():
         #Define our Deck
         global deck
         global playerhand
+        global opponenthand1
+        global opponenthand2
+        global opponenthand3
+
 
         ########## Build Deck from Database ######### 
         cards = """SELECT *
@@ -366,10 +515,45 @@ def main_window():
         #card = random.choice(deck)
         random.shuffle(deck)
 
+        sql = """INSERT INTO hand(h_playerkey, h_mainkey, h_finger)
+                VALUES(?, ?, ?)"""
+
+        opponenthand1 = []
+        opponenthand2 = []
+        opponenthand3 = []
         for i in range (5):
             card = deck[0]
+            mainkey = card[0]
+            args = [1, mainkey, i + 1]
+            conn.execute(sql, args)
+            conn.commit()
             playerhand.append(card)
             deck.pop(0)
+
+            card = deck[0]
+            mainkey = card[0]
+            args = [2, mainkey, i + 1]
+            conn.execute(sql, args)
+            conn.commit()
+            opponenthand1.append(card)
+            deck.pop(0)
+
+            card = deck[0]
+            mainkey = card[0]
+            args = [3, mainkey, i + 1]
+            conn.execute(sql, args)
+            conn.commit()
+            opponenthand2.append(card)
+            deck.pop(0)
+
+            card = deck[0]
+            mainkey = card[0]
+            args = [4, mainkey, i + 1]
+            conn.execute(sql, args)
+            conn.commit()
+            opponenthand3.append(card)
+            deck.pop(0)
+
 
         
 
