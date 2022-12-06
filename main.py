@@ -273,11 +273,11 @@ def main_window():
 
         cards = """SELECT h_mainkey
                     FROM hand
-                    WHERE h_playerkey = 1
+                    WHERE h_playerkey = ?
                     ORDER BY h_finger"""
-
+        args = [playerkey]
         playerCards = conn.cursor()
-        playerCards.execute(cards)
+        playerCards.execute(cards, args)
         playerCards = playerCards.fetchall()
         global names
         names = []
@@ -338,24 +338,25 @@ def main_window():
     def detect_key_press(event):
 
         if (len(playerhand) > 0):
+            playerkeylist = [playerkey]
 
             if event.char == '1':
                 search = """SELECT h_mainkey
                             FROM hand
                             WHERE h_finger = 1 AND
-                                h_playerkey = 1"""
+                                h_playerkey = ?"""
                 result = conn.cursor()
-                result.execute(search)
+                result.execute(search, playerkeylist)
                 card = result.fetchall()
                 print(card)
                 if card:
                     sql = """INSERT INTO field(f_playerkey, f_mainkey)
                             VALUES(?, ?)"""
-                    args = [1, card[0][0]]
+                    args = [playerkey, card[0][0]]
                     delete = """DELETE FROM hand
-                                WHERE h_playerkey = 1 AND
+                                WHERE h_playerkey = ? AND
                                 h_finger = 1"""
-                    conn.execute(delete)
+                    conn.execute(delete, playerkeylist)
                     conn.commit()
                     conn.execute(sql, args)
                     conn.commit()
@@ -372,19 +373,19 @@ def main_window():
                 search = """SELECT h_mainkey
                             FROM hand
                             WHERE h_finger = 2 AND
-                                h_playerkey = 1"""
+                                h_playerkey = ?"""
                 result = conn.cursor()
-                result.execute(search)
+                result.execute(search, playerkeylist)
                 card = result.fetchall()
                 print(card)
                 if card:
                     sql = """INSERT INTO field(f_playerkey, f_mainkey)
                             VALUES(?, ?)"""
-                    args = [1, card[0][0]]
+                    args = [playerkey, card[0][0]]
                     delete = """DELETE FROM hand
-                                WHERE h_playerkey = 1 AND
+                                WHERE h_playerkey = ? AND
                                 h_finger = 2"""
-                    conn.execute(delete)
+                    conn.execute(delete, playerkeylist)
                     conn.commit()
                     conn.execute(sql, args)
                     conn.commit()
@@ -400,19 +401,19 @@ def main_window():
                 search = """SELECT h_mainkey
                             FROM hand
                             WHERE h_finger = 3 AND
-                                h_playerkey = 1"""
+                                h_playerkey = ?"""
                 result = conn.cursor()
-                result.execute(search)
+                result.execute(search, playerkeylist)
                 card = result.fetchall()
                 print(card)
                 if card:
                     sql = """INSERT INTO field(f_playerkey, f_mainkey)
                             VALUES(?, ?)"""
-                    args = [1, card[0][0]]
+                    args = [playerkey, card[0][0]]
                     delete = """DELETE FROM hand
-                                WHERE h_playerkey = 1 AND
+                                WHERE h_playerkey = ? AND
                                 h_finger = 3"""
-                    conn.execute(delete)
+                    conn.execute(delete, playerkeylist)
                     conn.commit()
                     conn.execute(sql, args)
                     conn.commit()
@@ -428,19 +429,19 @@ def main_window():
                 search = """SELECT h_mainkey
                             FROM hand
                             WHERE h_finger = 4 AND
-                                h_playerkey = 1"""
+                                h_playerkey = ?"""
                 result = conn.cursor()
-                result.execute(search)
+                result.execute(search, playerkeylist)
                 card = result.fetchall()
                 print(card)
                 if card:
                     sql = """INSERT INTO field(f_playerkey, f_mainkey)
                             VALUES(?, ?)"""
-                    args = [1, card[0][0]]
+                    args = [playerkey, card[0][0]]
                     delete = """DELETE FROM hand
-                                WHERE h_playerkey = 1 AND
+                                WHERE h_playerkey = ? AND
                                 h_finger = 4"""
-                    conn.execute(delete)
+                    conn.execute(delete, playerkeylist)
                     conn.commit()
                     conn.execute(sql, args)
                     conn.commit()
@@ -456,19 +457,19 @@ def main_window():
                 search = """SELECT h_mainkey
                             FROM hand
                             WHERE h_finger = 5 AND
-                                h_playerkey = 1"""
+                                h_playerkey = ?"""
                 result = conn.cursor()
-                result.execute(search)
+                result.execute(search, playerkeylist)
                 card = result.fetchall()
                 print(card)
                 if card:
                     sql = """INSERT INTO field(f_playerkey, f_mainkey)
                             VALUES(?, ?)"""
-                    args = [1, card[0][0]]
+                    args = [playerkey, card[0][0]]
                     delete = """DELETE FROM hand
-                                WHERE h_playerkey = 1 AND
+                                WHERE h_playerkey = ? AND
                                 h_finger = 5"""
-                    conn.execute(delete)
+                    conn.execute(delete, playerkeylist)
                     conn.commit()
                     conn.execute(sql, args)
                     conn.commit()
@@ -518,13 +519,18 @@ def main_window():
         sql = """INSERT INTO hand(h_playerkey, h_mainkey, h_finger)
                 VALUES(?, ?, ?)"""
 
+
+        playerkeys = [1, 2, 3, 4]
+        playerkeys.remove(playerkey)
+        print(playerkeys)
+
         opponenthand1 = []
         opponenthand2 = []
         opponenthand3 = []
         for i in range (5):
             card = deck[0]
             mainkey = card[0]
-            args = [1, mainkey, i + 1]
+            args = [playerkey, mainkey, i + 1]
             conn.execute(sql, args)
             conn.commit()
             playerhand.append(card)
@@ -532,7 +538,7 @@ def main_window():
 
             card = deck[0]
             mainkey = card[0]
-            args = [2, mainkey, i + 1]
+            args = [playerkeys[0], mainkey, i + 1]
             conn.execute(sql, args)
             conn.commit()
             opponenthand1.append(card)
@@ -540,7 +546,7 @@ def main_window():
 
             card = deck[0]
             mainkey = card[0]
-            args = [3, mainkey, i + 1]
+            args = [playerkeys[1], mainkey, i + 1]
             conn.execute(sql, args)
             conn.commit()
             opponenthand2.append(card)
@@ -548,7 +554,7 @@ def main_window():
 
             card = deck[0]
             mainkey = card[0]
-            args = [4, mainkey, i + 1]
+            args = [playerkeys[2], mainkey, i + 1]
             conn.execute(sql, args)
             conn.commit()
             opponenthand3.append(card)
