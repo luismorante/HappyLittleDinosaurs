@@ -147,20 +147,29 @@ def main_window():
         global card_image4
         global card_image5
 
-        card_image1 = resize_cards(f'images/cards/{playerhand[0]}.jpg')
+        global cardNames
+        cardNames = []
+        count = 0
+
+        for card in playerhand:
+            cardNames.append(playerhand[count][2].replace(' ', '_'))
+            print(cardNames[count])
+            count += 1
+
+        card_image1 = resize_cards(f'images/cards/{cardNames[0]}.jpg')
         playercard1.config(image = card_image1)
 
-        card_image2 = resize_cards(f'images/cards/{playerhand[1]}.jpg')
+        card_image2 = resize_cards(f'images/cards/{cardNames[1]}.jpg')
         playercard2.config(image = card_image2)
 
-        card_image3 = resize_cards(f'images/cards/{playerhand[2]}.jpg')
+        card_image3 = resize_cards(f'images/cards/{cardNames[2]}.jpg')
         playercard3.config(image = card_image3)
 
-        card_image4 = resize_cards(f'images/cards/{playerhand[3]}.jpg')
+        card_image4 = resize_cards(f'images/cards/{cardNames[3]}.jpg')
         playercard4.config(image = card_image4)
 
-        card_image5 = resize_cards(f'images/cards/{playerhand[4]}.jpg')
-        playercard5.config(image = card_image5) 
+        card_image5 = resize_cards(f'images/cards/{cardNames[4]}.jpg')
+        playercard5.config(image = card_image5)        
 
     
     def detect_key_press(event):
@@ -222,34 +231,7 @@ def main_window():
             playerhand.append(card)
             deck.pop(0)
 
-        global card_image1
-        global card_image2
-        global card_image3
-        global card_image4
-        global card_image5
-
-        cardNames = []
-        count = 0
-
-        for card in playerhand:
-            cardNames.append(playerhand[count][2].replace(' ', '_'))
-            print(cardNames[count])
-            count += 1
-
-        card_image1 = resize_cards(f'images/cards/{cardNames[0]}.jpg')
-        playercard1.config(image = card_image1)
-
-        card_image2 = resize_cards(f'images/cards/{cardNames[1]}.jpg')
-        playercard2.config(image = card_image2)
-
-        card_image3 = resize_cards(f'images/cards/{cardNames[2]}.jpg')
-        playercard3.config(image = card_image3)
-
-        card_image4 = resize_cards(f'images/cards/{cardNames[3]}.jpg')
-        playercard4.config(image = card_image4)
-
-        card_image5 = resize_cards(f'images/cards/{cardNames[4]}.jpg')
-        playercard5.config(image = card_image5)        
+        
 
         show_hand()
 
