@@ -38,6 +38,5 @@
 -- .separator "|"
 -- .import data/disasterCards.tbl disasterCards
 
-update maincards
-set m_point = 3 , m_effect = "You may discard a Point card with an effect from your hand, then add its point value to your score this round.", m_quantity = 2
-where m_mainkey = 13
+update disasterCards*
+set d_effect = null

@@ -39,9 +39,8 @@ conn.execute(sql)
 conn.commit()
 
 
-
 ###########      Resize Cards    #################
-def resize_cards(card):
+def resize_cards(card): # for the hand cards for player
     card_img = Image.open(card)
 
     resized_card_img = card_img.resize((150, 218))
@@ -51,7 +50,7 @@ def resize_cards(card):
 
     return resized_card
 
-def resize_cards_2(card):
+def resize_cards_2(card): #for the opponent hand cards
     card_img = Image.open(card)
 
     resized_card_img = card_img.resize((75, 109))
@@ -61,15 +60,135 @@ def resize_cards_2(card):
 
     return resized_card
 
+def resize_cards_3(card): # for the dino photos
+    card_img = Image.open(card)
+
+    resized_card_img = card_img.resize((200, 350))
+
+    global resized_card
+    resized_card = ImageTk.PhotoImage(resized_card_img)
+
+    return resized_card
 #_______________________________________________________________
+
+
+######################### Title Screen ##############################
+
+def title_screen():
+    global title_root
+    title_root = Tk()
+
+    title_root.title("Screen")
+    title_root.overrideredirect(True) #Hide Title
+    title_root.geometry("400x300")
+    title_root.eval('tk::PlaceWindow . center') #center of screen
+
+    title_label = Label(title_root, text="Title Screen", font = ("Helvetica", 18))
+    title_label.pack(pady=50)
+    play_Button = Button(title_root, text = "Play", command=choose_your_character)
+    play_Button.pack(pady=20)
+    play_Button.pack()
+    quitButton = Button(title_root, text="Exit", command = title_root.quit)
+    quitButton.pack()
+
+    title_root.config(bg = 'LightBlue')
+
+# ________________________________________________________________________
+
+
+######################### Choose Character ##############################
+def choose_your_character():
+    title_root.destroy()
+    global character_root
+    character_root = Tk()
+
+    character_root.config(bg = 'LightGreen')
+    
+    character_root.title("Screen")
+    character_root.overrideredirect(True) #Hide Title
+    character_root.geometry("1000x600")
+    #character_root.eval('tk::PlaceWindow . center') #center of screen
+
+    title_label = Label(character_root, text="Choose Your Character", font = ("Helvetica", 18))
+    title_label.pack(pady=50)
+
+    ButtonFrames = Frame(character_root)
+    ButtonFrames.pack(pady = 20)
+
+    global NervousRex_photo
+    global Stego_photo
+    global CryCeratops_photo
+    global BadLuckBronto_photo
+
+    NervousRex_photo = resize_cards_3(f'images/NERVOUS_REX.jpg')
+    Stego_photo = resize_cards_3(f'images/STEGO.jpg')
+    CryCeratops_photo = resize_cards_3(f'images/CRYCERATOPS.jpg')
+    BadLuckBronto_photo = resize_cards_3(f'images/BAD_LUCK_BRONTO.jpg')
+
+    Button_1_Position = LabelFrame(ButtonFrames)
+    Button_1_Position.grid(row = 0, column = 1, padx = 10, pady = 10)
+    Button_1 = Button(Button_1_Position, text = "NERVOUS REX", image = NervousRex_photo, command =  chose_NERVOUS_REX) #command = main_window("NERVOUS_REX")
+    Button_1.pack(pady = 10)
+
+    Button_2_Position = LabelFrame(ButtonFrames)
+    Button_2_Position.grid(row = 0, column = 0, padx = 10, pady = 10)
+    Button_2 = Button(Button_2_Position, text = "STEGO", image = Stego_photo, command = chose_STEGO)#command = main_window("STEGO")
+    Button_2.pack(pady = 10)
+
+    Button_3_Position = LabelFrame(ButtonFrames)
+    Button_3_Position.grid(row = 0, column = 2, padx = 10, pady = 10)
+    Button_3 = Button(Button_3_Position, text = "CRYCERATOPS", image = CryCeratops_photo, command = chose_CRYCERATOPS)#command = main_window("CRYCERATOPS")
+    Button_3.pack(pady = 10)
+
+    Button_4_Position = LabelFrame(ButtonFrames)
+    Button_4_Position.grid(row = 0, column = 3, padx = 10, pady = 10)
+    Button_4 = Button(Button_4_Position, text = "BAD LUCK BRONTO", image = BadLuckBronto_photo, command = chose_BAD_LUCK_BRONTO)#command = main_window("BAD_LUCK_BRONTO")
+    Button_4.pack(pady = 10)
+
+    quitButton = Button(character_root, text="Exit", command = character_root.quit)
+    quitButton.pack()
+# ________________________________________________________________________
+
+
+def chose_STEGO():
+
+    global playerkey
+    playerkey = 1
+    main_window()
+
+def chose_NERVOUS_REX():
+    global playerkey
+    playerkey = 2
+    main_window()
+
+def chose_CRYCERATOPS():
+    global playerkey
+    playerkey = 3
+    main_window()
+
+def chose_BAD_LUCK_BRONTO():
+    global playerkey
+    playerkey = 4
+    main_window()
+
 
 def main_window():
 
-    title_root.destroy()
+    character_root.destroy()
     root = Tk()
+
+    print(playerkey)
+
+    #############  Full Screen  ##############
     root.title("HAPPY LITTLE DINOSAURS")
-    root.geometry("2500x1000")
+    root.overrideredirect(True) #Hide Title
+    width= root.winfo_screenwidth()
+    height= root.winfo_screenheight()
+    root.geometry("%dx%d" % (width, height))
+    #-_______________________________________
     root.config(bg = "#EAD1AC")
+
+
 
     playerhand_frame = Frame(root)#bg = "green"
     playerhand_frame.pack(side = "bottom",pady=20)
@@ -324,26 +443,8 @@ def main_window():
     # ___________________________________________
 
 
-######################### Title Screen ##############################
-title_root = Tk()
 
-title_root.title("Screen")
-title_root.overrideredirect(True) #Hide Title
-title_root.geometry("400x300")
-title_root.eval('tk::PlaceWindow . center') #center of screen
-
-title_label = Label(title_root, text="Title Screen", font = ("Helvetica", 18))
-title_label.pack(pady=50)
-play_Button = Button(title_root, text = "Play", command=main_window)
-play_Button.pack(pady=20)
-play_Button.pack()
-quitButton = Button(title_root, text="Exit", command = title_root.quit)
-quitButton.pack()
-
-title_root.config(bg = 'LightBlue')
-
-# ________________________________________________________________________
-
+title_screen()
 
 mainloop() 
 
